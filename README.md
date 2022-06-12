@@ -3,7 +3,7 @@
 
 1. Для начала, нам потребуется VPS/VDS-сервер, купить его можно у [Aeza](https://aeza.net/?ref=349240), [FirstByte](https://firstbyte.ru), [SRV.Cheap](https://srv.cheap), [HostVDS](https://hostvds.com) и множества других провайдеров, которые принимают оплату по русским картам  
 2. После того, как мы купили сервер, нужно зайти в SSH через [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) либо через [BitVise](https://bitvise.com)  
-3. После того, как мы зашли в SSH, потребуется [перейти на сайт](https://dev.dotmix.pw/dotmix/wireguard-ru) и скачать мой русский установщик WireGuard, либо прописать команду: `curl -O https://dev.dotmix.pw/dotmix/wireguard-ru/raw/branch/master/wireguard-ru.sh`, затем `chmod +x wireguard-ru.sh`, и затем `./wireguard-ru.sh`  
+3. После того, как мы зашли в SSH, потребуется [перейти на сайт](https://github.com/dotmix/wireguard-ru) и скачать мой русский установщик WireGuard, либо прописать команду: `curl -O https://github.com/dotmix/wireguard-ru/releases/download/v1.0/wireguard-ru.sh`, затем `chmod +x wireguard-ru.sh`, и затем `./wireguard-ru.sh`  
 ![image](https://user-images.githubusercontent.com/102430482/172452974-88b3812d-9602-42fc-a2bd-5fbf2d65f128.png)
 4. Далее, нажимаем Enter, когда предлагается ввести данные, поля будут заполнены автоматически (я замазал некоторые данные для безопасности)  
 ![image](https://user-images.githubusercontent.com/102430482/172453659-41eb57f7-4c45-4961-ac69-3df93f0d0705.png)
