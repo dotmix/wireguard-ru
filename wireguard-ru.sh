@@ -62,7 +62,7 @@ function initialCheck() {
 function installQuestions() {
     echo -e ""
 	echo -e "Добро пожаловать в установщик WireGuard!"
-	echo -e "Репозиторий с русским переводом: https://dev.dotmix.pw/dotmix/wireguard-ru"
+	echo -e "Репозиторий с русским переводом: https://github.com/dotmix/wireguard-ru"
 	echo -e ""
 	echo -e "Необходимо заполнить некоторые поля для установки"
 	echo -e "Вы можете зажать Enter, если не хотите изменять настройки"
@@ -104,10 +104,10 @@ function installQuestions() {
 
 	# Adguard DNS by default
 	until [[ ${CLIENT_DNS_1} =~ ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$ ]]; do
-		read -rp "Первый DNS, используемый для клиентов: " -e -i 8.8.8.1 CLIENT_DNS_1
+		read -rp "Первый DNS, используемый для клиентов: " -e -i 8.8.8.8 CLIENT_DNS_1
 	done
 	until [[ ${CLIENT_DNS_2} =~ ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$ ]]; do
-		read -rp "Второй DNS, используемый для клиентов (необязательно): " -e -i 8.8.8.8 CLIENT_DNS_2
+		read -rp "Второй DNS, используемый для клиентов (необязательно): " -e -i 8.8.4.4 CLIENT_DNS_2
 		if [[ ${CLIENT_DNS_2} == "" ]]; then
 			CLIENT_DNS_2="${CLIENT_DNS_1}"
 		fi
@@ -364,8 +364,8 @@ function revokeClient() {
 
 function uninstallWg() {
 	echo -e ""
-	read -rp "Вы действительно хотите удалить WireGuard? [да/нет]: " -e -i n REMOVE
-	if [[ $REMOVE == 'да' ]]; then
+	read -rp "Вы действительно хотите удалить WireGuard? [y/n]: " -e -i n REMOVE
+	if [[ $REMOVE == 'y' ]]; then
 		checkOS
 
 		systemctl stop "wg-quick@${SERVER_WG_NIC}"
@@ -411,7 +411,7 @@ function uninstallWg() {
 		fi
 	else
 		echo -e ""
-		echo -e "${RED}Удаление WireGuard отменено"
+		echo -e "${RED}Удаление WireGuard отменено${NC}"
 		echo -e ""
 	fi
 }
@@ -419,7 +419,7 @@ function uninstallWg() {
 function manageMenu() {
     echo -e ""
 	echo -e "Добро пожаловать в установщик WireGuard!"
-	echo -e "Репозиторий с русским переводом: https://dev.dotmix.pw/dotmix/wireguard-ru"
+	echo -e "Репозиторий с русским переводом: https://github.com/dotmix/wireguard-ru"
 	echo -e ""
 	echo -e "Поскольку WireGuard уже установлен, Вы можете управлять им"
 	echo -e ""
