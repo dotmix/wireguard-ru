@@ -107,7 +107,7 @@ function installQuestions() {
 		read -rp "Первый DNS, используемый для клиентов: " -e -i 1.1.1.1 CLIENT_DNS_1
 	done
 	until [[ ${CLIENT_DNS_2} =~ ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$ ]]; do
-		read -rp "Второй DNS, используемый для клиентов (необязательно): " -e -i 1.1.1.1 CLIENT_DNS_2
+		read -rp "Второй DNS, используемый для клиентов (необязательно): " -e -i 2606:4700:4700::1111 CLIENT_DNS_2
 		if [[ ${CLIENT_DNS_2} == "" ]]; then
 			CLIENT_DNS_2="${CLIENT_DNS_1}"
 		fi
@@ -303,15 +303,17 @@ function newClient() {
 
 	# Create client file and add the server as a peer
 	echo -e "[Interface]
+Address = ${CLIENT_WG_IPV4}/32, ${CLIENT_WG_IPV6}/128
+DNS = ${CLIENT_DNS_1}, ${CLIENT_DNS_2}
 PrivateKey = ${CLIENT_PRIV_KEY}
-Address = ${CLIENT_WG_IPV4}/32,${CLIENT_WG_IPV6}/128
-DNS = ${CLIENT_DNS_1},${CLIENT_DNS_2}
+MTU = 1280
 
 [Peer]
 PublicKey = ${SERVER_PUB_KEY}
 PresharedKey = ${CLIENT_PRE_SHARED_KEY}
+AllowedIPs = 0.0.0.0/0, ::/0" >>"${HOME_DIR}/${SERVER_WG_NIC}-client-${CLIENT_NAME}.conf
 Endpoint = ${ENDPOINT}
-AllowedIPs = 0.0.0.0/0,::/0" >>"${HOME_DIR}/${SERVER_WG_NIC}-client-${CLIENT_NAME}.conf"
+PersistentKeepalive = 60"
 
 	# Add the client as a peer to the server
 	echo -e "\n### Client ${CLIENT_NAME}
