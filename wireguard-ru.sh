@@ -107,6 +107,11 @@ function installQuestions() {
 		read -rp "Первый DNS, используемый для клиентов: " -e -i 1.1.1.1 CLIENT_DNS_1
 	done
 
+	read -rp "Второй DNS, используемый для клиентов (необязательно): " -e -i 2606:4700:4700::1111 CLIENT_DNS_2
+	if [[ ${CLIENT_DNS_2} == "" ]]; then
+		CLIENT_DNS_2="${CLIENT_DNS_1}"
+	fi
+
 	echo -e ""
 	echo -e "Поля заполнены успешно, Вам потребуется заполнить некоторые поля после установки компонентов"
 	read -n1 -r -p "Нажмите любую клавишу для установки компонентов..."
@@ -169,7 +174,7 @@ SERVER_PORT=${SERVER_PORT}
 SERVER_PRIV_KEY=${SERVER_PRIV_KEY}
 SERVER_PUB_KEY=${SERVER_PUB_KEY}
 CLIENT_DNS_1=${CLIENT_DNS_1}
-CLIENT_DNS_2=2606:4700:4700::1111" >/etc/wireguard/params
+CLIENT_DNS_2=${CLIENT_DNS_2}" >/etc/wireguard/params
 
 	# Add server interface
 	echo -e "[Interface]
@@ -298,16 +303,16 @@ function newClient() {
 	# Create client file and add the server as a peer
 	echo -e "[Interface]
 Address = ${CLIENT_WG_IPV4}/32
-DNS = ${CLIENT_DNS_1}, 2606:4700:4700::1111
+DNS = ${CLIENT_DNS_1}, ${CLIENT_DNS_2}
 PrivateKey = ${CLIENT_PRIV_KEY}
 MTU = 1280
 
 [Peer]
 PublicKey = ${SERVER_PUB_KEY}
 PresharedKey = ${CLIENT_PRE_SHARED_KEY}
-AllowedIPs = 0.0.0.0/0, ::/0" >>"${HOME_DIR}/${SERVER_WG_NIC}-client-${CLIENT_NAME}.conf
+AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = ${ENDPOINT}
-PersistentKeepalive = 60"
+PersistentKeepalive = 60">>"${HOME_DIR}/${SERVER_WG_NIC}-client-${CLIENT_NAME}.conf"
 
 	# Add the client as a peer to the server
 	echo -e "\n### Client ${CLIENT_NAME}
@@ -360,7 +365,7 @@ function revokeClient() {
 
 function uninstallWg() {
 	echo -e ""
-	read -rp "Вы действительно хотите удалить WireGuard? [y/n]: " -e -i n REMOVE
+	read -rp "Вы действительно хотите удалить WireGuard? [y/n]: " -e REMOVE
 	if [[ $REMOVE == 'y' ]]; then
 		checkOS
 
