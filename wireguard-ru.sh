@@ -102,14 +102,10 @@ function installQuestions() {
 		read -rp "Порты WireGuard-сервера [1-65535]: " -e -i "${RANDOM_PORT}" SERVER_PORT
 	done
 
-	# Adguard DNS by default
+	# CloudFlare DNS by default
 	until [[ ${CLIENT_DNS_1} =~ ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$ ]]; do
 		read -rp "Первый DNS, используемый для клиентов: " -e -i 1.1.1.1 CLIENT_DNS_1
 	done
-	read -rp "Второй DNS, используемый для клиентов (необязательно): " -e -i 2606:4700:4700::1111 CLIENT_DNS_2
-	if [[ ${CLIENT_DNS_2} == "" ]]; then
-		CLIENT_DNS_2="${CLIENT_DNS_1}"
-	fi
 
 	echo -e ""
 	echo -e "Поля заполнены успешно, Вам потребуется заполнить некоторые поля после установки компонентов"
@@ -173,7 +169,7 @@ SERVER_PORT=${SERVER_PORT}
 SERVER_PRIV_KEY=${SERVER_PRIV_KEY}
 SERVER_PUB_KEY=${SERVER_PUB_KEY}
 CLIENT_DNS_1=${CLIENT_DNS_1}
-CLIENT_DNS_2=${CLIENT_DNS_2}" >/etc/wireguard/params
+CLIENT_DNS_2=2606:4700:4700::1111" >/etc/wireguard/params
 
 	# Add server interface
 	echo -e "[Interface]
@@ -301,8 +297,8 @@ function newClient() {
 
 	# Create client file and add the server as a peer
 	echo -e "[Interface]
-Address = ${CLIENT_WG_IPV4}/32, ${CLIENT_WG_IPV6}/128
-DNS = ${CLIENT_DNS_1}, ${CLIENT_DNS_2}
+Address = ${CLIENT_WG_IPV4}/32
+DNS = ${CLIENT_DNS_1}, 2606:4700:4700::1111
 PrivateKey = ${CLIENT_PRIV_KEY}
 MTU = 1280
 
