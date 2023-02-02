@@ -9,14 +9,14 @@ sudo apt update && sudo apt install -y curl && curl -O https://raw.githubusercon
 sudo chmod +x wireguard-ru.sh
 ./wireguard-ru.sh
 ```  
-![image](https://user-images.githubusercontent.com/102430482/216428704-d26f22bf-330c-4e6f-a84a-60d99911900d.png)  
+![image](https://user-images.githubusercontent.com/102430482/216429733-5419613e-d186-427f-b252-60387a3786c8.png)  
 4. Далее, нажимаем Enter, когда предлагается ввести данные, поля будут заполнены автоматически  
 ![image](https://user-images.githubusercontent.com/102430482/216428935-262dbff8-5502-4876-85ca-93c9afbd7d1d.png)
 5. Далее нам предлагается ввести имя пользователя, вводим любое имя, которое Вам удобно (оно будет храниться в названии файла профиля подключения и в базе пользователей)  
 ![image](https://user-images.githubusercontent.com/102430482/216429133-247564c0-e214-487b-ba22-5ea5a6a755c4.png)  
 6. После заполнения всех полей, будет сообщение об успешной установке, и в консоль отправится QR-код, он нужен для подключения мобильных устройств  
-![image](https://user-images.githubusercontent.com/102430482/216429332-02761bd6-40cc-4d70-b9bd-8276ef3934b9.png)  
-![image](https://user-images.githubusercontent.com/102430482/216429441-c2a7dd6b-2a67-4c22-87a0-199b30134d23.pn)  
+![image](https://user-images.githubusercontent.com/102430482/216429950-5be024cd-93f2-4afc-947b-4f3cbe524cc2.png)  
+![image](https://user-images.githubusercontent.com/102430482/216429441-c2a7dd6b-2a67-4c22-87a0-199b30134d23.png)  
 7. Если Вы захотите добавить еще одного пользователя или удалить его, либо же удалить WireGuard с сервера, достаточно запустить скрипт еще раз, и нам будет предложено выбрать действие  
 ![image](https://user-images.githubusercontent.com/102430482/216429546-3ac275fb-c54c-4ba8-9156-25cfbf3c8761.png)  
 
